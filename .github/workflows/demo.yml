@@ -1,6 +1,9 @@
 name: demo
 
-on: [push]
+on:
+  push:
+    tags:
+    - 'v*.*.*'
 
 jobs:
   test:
@@ -13,8 +16,8 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - uses: azure/docker-login@v1
       with:
-        login-server: kirasemifir.azurecr.io
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
-    - run: docker build . -t kirasemifir.azurecr.io/demo
-    - run: docker push kirasemifir.azurecr.io/demo
+    - run: docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.repository.name }}:${{ github.ref_name }}
+    - run: docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ github.event.repository.name }}:${{ github.ref_name }}
