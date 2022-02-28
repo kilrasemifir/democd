@@ -9,3 +9,4 @@ jobs:
     - run: echo "Hello world!!!"
     - uses: actions/checkout@main
     - run: docker build . -t demo-cd
+    - run: az login
