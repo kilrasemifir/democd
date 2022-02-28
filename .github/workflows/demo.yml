@@ -8,4 +8,4 @@ jobs:
     steps:
     - run: echo "Hello world!!!"
     - uses: actions/checkout@main
-    - run: ls
+    - run: docker build . -t demo-cd
